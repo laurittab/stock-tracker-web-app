@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
   //const { data } = await $fetch(
   //  "someendpoint?apikey=somekeyinfotobekeptprivate"
   // );
+  console.log(age, name);
   return {
     message: `Hello ${name} aged ${age}`,
   };

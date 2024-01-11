@@ -1,21 +1,27 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxt/ui", "@pinia/nuxt" /*, "@nuxtjs/tailwindcss"*/],
+  ui: {
+    icons: ["mdi"],
+  },
+  //tailwindcss: { cssPath: "~/assets/css/tailwind.css" },
   app: {
     head: {
       title: "Rita's Stocks",
       meta: [{ name: "description", content: "all my stock picks" }],
       link: [
         {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/icon?family=Material+Icons",
+          // rel: "stylesheet",
+          //   href: "https://fonts.googleapis.com/icon?family=Material+Icons",
         },
       ],
     },
+    pageTransition: { name: "page", mode: "out-in" },
   },
   runtimeConfig: {
     currencyKey: process.env.CURRENCY_API_KEY,
+    alphaVantageKey: process.env.ALPHA_VANTAGE_API_KEY,
     public: {
       somekey: "this can be exposed to frontend",
     },

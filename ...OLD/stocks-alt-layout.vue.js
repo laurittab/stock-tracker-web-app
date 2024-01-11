@@ -1,3 +1,4 @@
+/*
 <template>
   <div>
     <header class="shadow-sm bg-white">
@@ -13,15 +14,11 @@
       <ul class="flex gap-4">
         <li><NuxtLink to="/">Home</NuxtLink></li>
         <li><NuxtLink to="/add">Add</NuxtLink></li>
-        <li><NuxtLink to="/edit">Edit</NuxtLink></li>
         <li><NuxtLink to="/stocks">Stocks</NuxtLink></li>
       </ul>
     </footer>
   </div>
 </template>
 
-<style scoped>
-.router-link-exact-active {
-  color: #12b488;
-}
-</style>
+<style scoped></style>
+*/

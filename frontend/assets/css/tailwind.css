@@ -1,0 +1,31 @@
+/*import all the different parts of the tialwind library*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.router-link-exact-active {
+  @apply text-violet-900;
+}
+
+/* add extra classes, e.g. add a body selector, and apply different utility classes to the body
+body {
+  @apply bg-gray-50
+}
+*/
+
+/* adding default base styles for specific HTML elements */
+@layer base {
+  h1 {
+    @apply text-5xl;
+  }
+}
+
+/*add extra components*/
+@layer components {
+  .btn {
+    @apply shadow-2xl bg-zinc-200 rounded-xl text-sm p-2;
+  }
+  .card {
+    @apply p-3 rounded-md bg-white shadow-md h-full;
+  }
+}

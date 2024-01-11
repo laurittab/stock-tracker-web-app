@@ -1,28 +1,33 @@
 <template>
-  <div>
-    <header class="shadow-sm bg-white">
-      <nav class="container mx-auto p-4 flex justify-between">
-        <NuxtLink to="/" class="font-bold">Stocks App</NuxtLink>
-        <ul class="flex gap-4">
-          <li><NuxtLink to="/">Home</NuxtLink></li>
-          <li><NuxtLink to="/add">Add</NuxtLink></li>
-          <li><NuxtLink to="/edit">Edit</NuxtLink></li>
-          <li><NuxtLink to="/stocks" class="btn">Stocks</NuxtLink></li>
-          <li><NuxtLink to="/stocks/blublu">Blu</NuxtLink></li>
-        </ul>
-      </nav>
+  <div class="select-none">
+    <header class="p-4 flex">
+      <div class="mx-auto"><CurrencySelector /></div>
     </header>
     <!--output page content using slot -->
-    <div class="container mx-auto p-4">
-      <slot />
+    <div class="grid grid-cols-12 p-4">
+      <div class="row-span-full col-span-10 container mx-auto">
+        <slot />
+      </div>
+      <UDivider class="row-span-full" color="#585659" orientation="vertical"
+        ><NuxtLink to="https://github.com/laurittab" external target="_blank"
+          ><div>
+            <Icon
+              class="hover:animate-spin"
+              name="i-mdi-github"
+              color="#585659"
+              width="30"
+              height="30"
+            /></div></NuxtLink
+      ></UDivider>
+      <div class="row-span-full col-span-2">
+        <NavLinks />
+      </div>
     </div>
   </div>
 </template>
+<script></script>
 
 <style scoped>
-.router-link-exact-active {
-  color: #12b488;
-}
 h2 {
   margin-bottom: 20px;
   font-size: 36px;
