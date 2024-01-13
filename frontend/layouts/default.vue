@@ -1,7 +1,18 @@
 <template>
   <div class="select-none">
     <header class="p-4 flex">
-      <div class="mx-auto"><CurrencySelector /></div>
+      <div class="mx-auto">
+        <CurrencySelector />
+      </div>
+      <div>
+        <button
+          type="submit"
+          @click="signOut"
+          class="text-sm hover:font-bold soft"
+        >
+          Sign out
+        </button>
+      </div>
     </header>
     <!--output page content using slot -->
     <div class="grid grid-cols-12 p-4">
@@ -25,7 +36,13 @@
     </div>
   </div>
 </template>
-<script></script>
+<script setup>
+const signOut = async () => {
+  const loggedIn = useLoginStatus();
+  loggedIn.value = false;
+  await navigateTo("/login");
+};
+</script>
 
 <style scoped>
 h2 {

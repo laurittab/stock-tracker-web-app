@@ -20,13 +20,15 @@
     <UFormGroup label="Bottom price:" name="bottom_price">
       <UInput v-model="state.bottom_price" />
     </UFormGroup>
-    <UButton type="submit" @click="isOpen = false"> Submit </UButton>
+    <UButton type="submit"> Submit </UButton>
   </UForm>
 </template>
 
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 const isOpen = useOpenStockForm();
+//const { data } = await useFetch("/api/stocks/post"); //"http://localhost:4000/stocks";
+//const uri = data.value
 const { details } = defineProps(["details"]);
 const state = reactive({
   id: details?.id || undefined,
@@ -60,9 +62,10 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     bottom_price: event.data.bottom_price,
   };
   if (details) {
-    addStock("put", reqBody);
+    updateStock(reqBody);
   } else {
-    addStock("post", reqBody);
+    addStock(reqBody);
   }
+  isOpen.value = false;
 }
 </script>

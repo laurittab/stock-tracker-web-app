@@ -16,3 +16,6 @@ export const useStockDetails = (): Ref => useState("stock-details", () => {});
 // useState("select-columns", () => shallowRef(columnsArray)); https://www.reddit.com/r/Nuxt/comments/1818b2d/the_definitive_guide_to_shallowref_in_vue/
 export const useStockList = () => useState("stock-list", () => []);
 export const useMessageToast = (): Ref => useState("message-toast", () => "");
+export const useLoginStatus = () => useState("logged-in", () => false);
+export const useTableKey = () => useState("table-key", () => 0);
+export const useSelectedStocks = () => useState("selected-stocks", () => []);

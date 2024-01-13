@@ -1,61 +1,75 @@
-export const stocksUri = "http://localhost:4000/stocks";
+function createToast(message) {
+  const tableKey = useTableKey();
+  const toast = useToast();
+  toast.add({
+    title: "<b>Server response</b>",
+    description: `<u>message</u>: ${message}`,
+    timeout: 1500,
+  });
+  tableKey.value++;
+}
 
 export const getStocks = async () => {
-  const toast = useToast();
-  const { data, error } = await useFetch(stocksUri);
-  console.log(data, error);
-  toast.add({
-    title: "<b>Server response</b>",
-    description: `<u>message</u>: ${data.value.length} stocks retrieved`,
-  });
-  return data;
-};
-export const addStock = async (reqMethod, reqBody) => {
-  console.log("adding stock with reqMethod:", reqMethod);
-  const toast = useToast();
-  const { data, error } = await useFetch(stocksUri, {
-    method: reqMethod,
-    body: reqBody,
-  });
-  console.log(data, error);
-  toast.add({
-    title: "<b>Server response</b>",
-    description: `<u>message</u>: ${data.value}`,
-  });
+  const {
+    data: {
+      value: { stocks, message },
+    },
+    error,
+  } = await useFetch(`/api/stocks/get`);
+  console.log("getStocks:", message, error);
+  //if (process.client) createToast(message);
+  return stocks;
 };
 
-export const updateStock = async (reqMethod, reqBody) => {
-  console.log("updating stock with reqMethod:", reqMethod);
-  const toast = useToast();
-  const { data, error } = await useFetch(stocksUri, {
-    method: reqMethod,
+export const addStock = async (reqBody) => {
+  const {
+    data: {
+      value: { message },
+    },
+    error,
+  } = await useFetch(`/api/stocks/post`, {
+    method: "post",
     body: reqBody,
   });
-  console.log(data, error);
-  toast.add({
-    title: "<b>Server response</b>",
-    description: `<u>message</u>: ${data.value}`,
+  console.log("addStocks", message, error);
+  if (process.client) createToast(message);
+  getStocks();
+};
+
+export const updateStock = async (reqBody) => {
+  const {
+    data: {
+      value: { message },
+    },
+    error,
+  } = await useFetch(`/api/stocks/put`, {
+    method: "put",
+    body: reqBody,
   });
+  console.log("updateStock:", message, error);
+  if (process.client) createToast(message);
+  getStocks();
 };
 
 export const deleteStock = async (selection) => {
-  const stockDetails = useStockList();
-  const toast = useToast();
   let params = {};
   let count = 1;
+  console.log("selection", selection);
   for (const stock of selection) {
     params[`id${count}`] = stock.id;
     count++;
   }
   console.log("params", params);
-  const { data, error } = await useFetch(stocksUri, {
+  const {
+    data: {
+      value: { message },
+    },
+    error,
+  } = await useFetch(`/api/stocks/delete`, {
     method: "delete",
     query: params,
   });
-  console.log(data, error);
-  toast.add({
-    title: "<b>Server response</b>",
-    description: `<u>message</u>: ${data.value}`,
-  });
-  stockDetails.value = await getStocks();
+  console.log("deleteStock", message, error);
+  if (process.client) createToast(message);
+  getStocks();
 };

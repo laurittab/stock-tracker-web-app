@@ -1,22 +1,19 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-  <UNotifications>
-    <template #title="{ title }">
-      <span v-html="title" />
-    </template>
-    <template #description="{ description }">
-      <span v-html="description" />
-    </template>
-  </UNotifications>
+  <div>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    <UNotifications>
+      <template #title="{ title }">
+        <span v-html="title" />
+      </template>
+      <template #description="{ description }">
+        <span v-html="description" />
+      </template>
+    </UNotifications>
+  </div>
 </template>
-<script setup>
-//const notification = useMessageToast();
-//const notificationTitle = notification.value;
-//const toast = useToast();
-//toast.add({ title: notificationTitle });
-</script>
+<script setup></script>
 <style>
 .layout-enter-active,
 .layout-leave-active {

@@ -32,7 +32,9 @@ app.get("/stocks", async (req, res) => {
   try {
     const stocks = await compileStocksData(); //Overview.find({}).exec(); //compileStocksData();
     console.log("all stocks retrieved");
-    res.status(200).send(stocks);
+    res
+      .status(200)
+      .send({ stocks: stocks, message: `${stocks.length} stocks retrieved` });
   } catch (error) {
     console.log(error);
   }
@@ -42,7 +44,7 @@ app.get("/stocks/:id", async (req, res) => {
   try {
     console.log("params", id);
     const stock = await Stock.findById(id).exec();
-    res.status(200).send(stock);
+    res.status(200).send({ stock: stock, message: `${stocks.id} retrieved` });
   } catch (error) {
     console.log(error);
   }
@@ -58,7 +60,9 @@ app.post("/stocks/", async (req, res) => {
     });
     const saved = await newStock.save();
     console.log("saved stock", saved);
-    res.status(200).send(`stock ${symbol} with ID ${saved.id} has been added`);
+    res.status(200).send({
+      message: `stock ${symbol} with ID ${saved.id} has been added`,
+    });
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -68,14 +72,16 @@ app.put("/stocks/", async (req, res) => {
   //const update = req.body;
   console.log("put req.body", id, symbol, comments, target_price, bottom_price);
   try {
-    const data = /*await Stock.findByIdAndUpdate(id,*/ {
+    const data = await Stock.findByIdAndUpdate(id, {
       symbol,
       comments,
       target_price,
       bottom_price,
-    }; /*).exec();*/
+    }).exec();
     console.log("updated stock", data);
-    res.status(200).send(`stock ${symbol} has been updated`);
+    res.status(200).send({
+      message: `stock ${symbol} has been updated`,
+    });
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -90,7 +96,9 @@ app.delete("/stocks/", async (req, res) => {
       console.log("deleting stock id:", params[param]);
       await Stock.findByIdAndDelete(params[param]);
     }
-    res.status(200).send(`${count} stocks deleted`);
+    res.status(200).send({
+      message: `${count} stock(s) deleted`,
+    });
   } catch (error) {
     res.send("Error deleting stocks");
   }

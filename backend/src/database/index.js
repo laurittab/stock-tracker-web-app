@@ -32,7 +32,7 @@ export const symbols = await Stock.distinct("symbol"); //find all symbols
 export default db;
 
 //const peak = await Stock.find({});
-//const peak = await Stock.findById("659d343fe6157a4e35522466").exec();
+//const peak = await Stock.findById("65a1db430c6016fb3bdcb515").exec();
 //const peak = await Overview.findOne({ symbol: "ai" }).exec();
-//const peak = await Stock.findByIdAndDelete("659fc976dbb86bcce82b3318").exec();
+//const peak = await Stock.findByIdAndDelete("65a1db430c6016fb3bdcb515").exec();
 //console.log("peak", peak);
