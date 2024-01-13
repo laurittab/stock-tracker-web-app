@@ -48,8 +48,8 @@
           >
             <UButton
               label="Remove stock"
-              @mousedown="deleteStock(selected)"
-              @click="reRerender()"
+              @mousedown="removeStock(selected)"
+              @mouseup="reRerender()"
               :disabled="selected.length < 1"
               color="red"
               :ui="{
@@ -120,12 +120,15 @@
 const tableKey = useTableKey();
 const reRerender = async () => {
   selected.value = [];
-  stockDetails.value = await getStocks();
-  tableKey.value += 1;
+  const { stocks, message, color } = await getStocks();
+  stockDetails.value = stocks;
+  createToast(message, color);
+  tableKey.value++;
   console.log("rerendering table", tableKey.value);
 };
 const stockDetails = useStockList();
-stockDetails.value = await getStocks();
+const { stocks } = await getStocks();
+stockDetails.value = stocks;
 const selectColumns = ref([...columns]); //use store or possibly shallow ref
 const selected = ref([]); //useSelectStocks();
 const isOpen = useOpenStockForm();
@@ -133,6 +136,11 @@ const filter = useStockFilter();
 const page = useStockPage();
 const pageCount = 10;
 const pending = false; //const { pending, data: stockDetails } = await useLazyAsyncData('stockDetails', () => $fetch('/api/stock-details'))
+const removeStock = async (selection) => {
+  const { message, color } = await deleteStock(selection);
+  console.log("index-removeStock-message", message, color);
+  createToast(message, color);
+};
 function select(row) {
   const index = selected.value.findIndex((item) => item.id === row.id);
   //console.log(`item.id ${item.id} row.id ${row.id}`);

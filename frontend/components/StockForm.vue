@@ -62,9 +62,11 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     bottom_price: event.data.bottom_price,
   };
   if (details) {
-    updateStock(reqBody);
+    const { message, color } = await updateStock(reqBody);
+    createToast(message, color);
   } else {
-    addStock(reqBody);
+    const { message, color } = await addStock(reqBody);
+    createToast(message, color);
   }
   isOpen.value = false;
 }

@@ -9,18 +9,6 @@ import { Stock, Overview } from "./database/index.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
-let stocks = [
-  { stock_symbol: "crkn", comment: "possible turn around in 2024" },
-  {
-    stock_symbol: "meta",
-    comment: "look for dips in 2024, likely to forward split at some point",
-  },
-  {
-    stock_symbol: "tsla",
-    comment: "likely to forward split, just lean into it",
-  },
-];
-let currency = { currency_symbol: "GBP" };
 
 app.use(express.json({ limit: "50mb" }));
 app.use(cors({ methods: ["GET", "PUT", "POST", "DELETE"] }));
@@ -32,9 +20,11 @@ app.get("/stocks", async (req, res) => {
   try {
     const stocks = await compileStocksData(); //Overview.find({}).exec(); //compileStocksData();
     console.log("all stocks retrieved");
-    res
-      .status(200)
-      .send({ stocks: stocks, message: `${stocks.length} stocks retrieved` });
+    res.status(200).send({
+      stocks: stocks,
+      message: `${stocks.length} stocks retrieved`,
+      color: "teal",
+    });
   } catch (error) {
     console.log(error);
   }
@@ -44,7 +34,9 @@ app.get("/stocks/:id", async (req, res) => {
   try {
     console.log("params", id);
     const stock = await Stock.findById(id).exec();
-    res.status(200).send({ stock: stock, message: `${stocks.id} retrieved` });
+    res
+      .status(200)
+      .send({ stock: stock, message: `${stocks.id} retrieved`, color: "teal" });
   } catch (error) {
     console.log(error);
   }
@@ -62,6 +54,7 @@ app.post("/stocks/", async (req, res) => {
     console.log("saved stock", saved);
     res.status(200).send({
       message: `stock ${symbol} with ID ${saved.id} has been added`,
+      color: "teal",
     });
   } catch (error) {
     res.status(400).send(error.message);
@@ -81,6 +74,7 @@ app.put("/stocks/", async (req, res) => {
     console.log("updated stock", data);
     res.status(200).send({
       message: `stock ${symbol} has been updated`,
+      color: "teal",
     });
   } catch (error) {
     res.status(400).send(error.message);
@@ -98,26 +92,11 @@ app.delete("/stocks/", async (req, res) => {
     }
     res.status(200).send({
       message: `${count} stock(s) deleted`,
+      color: "teal",
     });
   } catch (error) {
     res.send("Error deleting stocks");
   }
-});
-app.get("/currency/", (req, res) => {
-  res.status(200).send(currency);
-});
-app.get("/currency/:currency_symbol", (req, res) => {
-  const { params: currency_symbol } = req;
-  currency = currency_symbol;
-  res.status(200).send(currency);
-});
-app.post("/stocks", (req, res) => {
-  const {
-    body: { stock_symbol, comment },
-  } = req;
-  stocks.push({ stock_symbol, comment });
-  console.log(stocks);
-  res.status(200).send(`${stock_symbol} has been added`);
 });
 
 app.listen(PORT, () => {
