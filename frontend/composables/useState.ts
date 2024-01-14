@@ -3,19 +3,8 @@
 // encapsulation prevents external code from being concerned with the internal workings of an object
 //auto import by calling function name, e.g.useAvailableColors and store return value insde a constant
 export const useSelectorColor = () => useState("selected-color", () => "");
-
 export const useAvailableColors = () =>
   useState("available-colors", () => ["red", "blue", "yellow", "green"]);
-
-export const useOpenStockForm = () => useState("open-stock-form", () => false);
 export const useStockFilter = () => useState("stock-filter", () => "");
 export const useStockPage = () => useState("stock-page", () => 1);
-export const useSelectStocks = () => useState("select-stocks", () => []);
-export const useStockDetails = (): Ref => useState("stock-details", () => {});
-//NOT WORKING export const useSelectColumns = (columnsArray) =>
-// useState("select-columns", () => shallowRef(columnsArray)); https://www.reddit.com/r/Nuxt/comments/1818b2d/the_definitive_guide_to_shallowref_in_vue/
-export const useStockList = () => useState("stock-list", () => []);
-export const useMessageToast = (): Ref => useState("message-toast", () => "");
 export const useLoginStatus = () => useState("logged-in", () => false);
-export const useTableKey = () => useState("table-key", () => 0);
-export const useSelectedStocks = () => useState("selected-stocks", () => []);

@@ -22,35 +22,35 @@ export const getStocks = async () => {
 export const addStock = async (reqBody) => {
   const {
     data: {
-      value: { message, color },
+      value: { stocks, message, color },
     },
     error,
   } = await useFetch(`/api/stocks/post`, {
     method: "post",
     body: reqBody,
   });
-  console.log("addStocks", message, color, error);
-  return { message, color };
+  console.log("addStocks", stocks.length, message, color, error);
+  return { stocks, message, color };
 };
 
 export const updateStock = async (reqBody) => {
   const {
     data: {
-      value: { message, color },
+      value: { stocks, message, color },
     },
     error,
   } = await useFetch(`/api/stocks/put`, {
     method: "put",
     body: reqBody,
   });
-  console.log("updateStock:", message, color, error);
-  return { message, color };
+  console.log("updateStock:", stocks.length, message, color, error);
+  return { stocks, message, color };
 };
 
 export const deleteStock = async (selection) => {
   let params = {};
   let count = 1;
-  //console.log("deleteStock-selection", selection);
+  console.log("deleteStock-selection", selection);
   for (const stock of selection) {
     params[`id${count}`] = stock.id;
     count++;

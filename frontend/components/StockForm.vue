@@ -26,9 +26,8 @@
 
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
-const isOpen = useOpenStockForm();
-//const { data } = await useFetch("/api/stocks/post"); //"http://localhost:4000/stocks";
-//const uri = data.value
+import { useTableStore } from "@/stores/table";
+const { reRenders, setStocks, closeForm, incrementKey } = useTableStore();
 const { details } = defineProps(["details"]);
 const state = reactive({
   id: details?.id || undefined,
@@ -65,9 +64,12 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     const { message, color } = await updateStock(reqBody);
     createToast(message, color);
   } else {
-    const { message, color } = await addStock(reqBody);
-    createToast(message, color);
+    const { stocks, message, color } = await addStock(reqBody);
+    setStocks(stocks);
+    //createToast(message, color);
   }
-  isOpen.value = false;
+  reRenders();
+  incrementKey();
+  closeForm();
 }
 </script>

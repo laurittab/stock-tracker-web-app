@@ -1,5 +1,16 @@
 <template>
   <div class="">
+    <button class="btn" @click="incrementKey">update tableKey</button><br />
+    <div :key="updatedKey">
+      tableKey {{ tableKey }} updatedKey {{ updatedKey }}
+      <br />stockDetailss.length {{ stockDetailss.length }} currentStocks.length
+      {{ currentStocks.length }} <br />try new filter for filteredRows
+      {{
+        [1, 2, 3].filter((element) => {
+          return element > 1;
+        })
+      }}<br />
+    </div>
     <h1 class="mb-8 ml-4">Stocks table</h1>
 
     <div>
@@ -25,8 +36,8 @@
           >
             <UButton
               label="Add stock"
-              @click="isOpen = true"
-              :disabled="selected.length !== 0"
+              @click="openForm"
+              :disabled="selection.length !== 0"
               color="teal"
               :ui="{
                 color: {
@@ -37,9 +48,9 @@
                 },
               }"
             />
-            <UModal v-model="isOpen">
+            <UModal v-model="openStatus">
               <div class="p-4">
-                <StockForm :details="selected[0]" />
+                <StockForm :details="selecteds[0]" />
               </div>
             </UModal>
           </div>
@@ -48,13 +59,13 @@
           >
             <UButton
               label="Remove stock"
-              @mousedown="removeStock(selected)"
-              @mouseup="reRerender()"
-              :disabled="selected.length < 1"
+              @mousedown="removeStocks(selection)"
+              @mouseup="reRenders()"
+              :disabled="selection.length < 1"
               color="red"
               :ui="{
                 color: {
-                  grey: {
+                  red: {
                     solid:
                       'shadow-sm ring-1 ring-inset ring-red-400 dark:ring-gray-700 text-red-800 dark:text-gray-200 bg-red-300 hover:bg-red-400 disabled:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700/50 dark:disabled:bg-gray-800 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
                   },
@@ -67,12 +78,12 @@
           >
             <UButton
               label="Edit stock"
-              @click="isOpen = true"
-              :disabled="selected.length !== 1"
+              @click="openForm"
+              :disabled="selection.length !== 1"
               color="blue"
               :ui="{
                 color: {
-                  grey: {
+                  blue: {
                     solid:
                       'shadow-sm ring-1 ring-inset ring-blue-400 dark:ring-gray-700 text-blue-800 dark:text-gray-200 bg-blue-300 hover:bg-blue-400 disabled:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700/50 dark:disabled:bg-gray-800 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
                   },
@@ -88,14 +99,14 @@
           <UPagination
             v-model="page"
             :page-count="pageCount"
-            :total="stockDetails.length"
+            :total="currentStocks.length"
           />
         </div>
       </div>
 
       <div>
         <UTable
-          :key="tableKey"
+          :key="currentStocks"
           :ui="{
             wrapper: 'relative overflow-hidden hover:overflow-x-scroll',
             base: 'max-w-fit table-fixed',
@@ -105,7 +116,7 @@
             icon: 'i-heroicons-circle-stack-20-solid',
             label: 'No items.',
           }"
-          v-model="selected"
+          v-model="selection"
           :rows="filteredRows"
           :columns="selectColumns"
           @select="select"
@@ -117,47 +128,37 @@
 
 <script setup>
 //selectable, row listener, empty, searchable, sortable, selectMenue, pagination, loading
-const tableKey = useTableKey();
-const reRerender = async () => {
-  selected.value = [];
-  const { stocks, message, color } = await getStocks();
-  stockDetails.value = stocks;
-  createToast(message, color);
-  tableKey.value++;
-  console.log("rerendering table", tableKey.value);
-};
-const stockDetails = useStockList();
+import { useTableStore } from "@/stores/table";
+const {
+  tableKey,
+  stockDetailss,
+  selecteds,
+  reRenders,
+  select,
+  openForm,
+  setStocks,
+  removeStocks,
+  incrementKey,
+  updatedKey,
+  selection,
+  openStatus,
+  currentStocks,
+} = useTableStore();
 const { stocks } = await getStocks();
-stockDetails.value = stocks;
+setStocks(stocks);
 const selectColumns = ref([...columns]); //use store or possibly shallow ref
-const selected = ref([]); //useSelectStocks();
-const isOpen = useOpenStockForm();
 const filter = useStockFilter();
 const page = useStockPage();
 const pageCount = 10;
 const pending = false; //const { pending, data: stockDetails } = await useLazyAsyncData('stockDetails', () => $fetch('/api/stock-details'))
-const removeStock = async (selection) => {
-  const { message, color } = await deleteStock(selection);
-  console.log("index-removeStock-message", message, color);
-  createToast(message, color);
-};
-function select(row) {
-  const index = selected.value.findIndex((item) => item.id === row.id);
-  //console.log(`item.id ${item.id} row.id ${row.id}`);
-  if (index === -1) {
-    selected.value.push(row);
-  } else {
-    selected.value.splice(index, 1);
-  }
-}
 const filteredRows = computed(() => {
   if (!filter.value) {
-    return stockDetails.value.slice(
+    return stockDetailss.slice(
       (page.value - 1) * pageCount,
       page.value * pageCount
     );
   }
-  return stockDetails.value
+  return stockDetailss
     .filter((person) => {
       return Object.values(person).some((value) => {
         return String(value).toLowerCase().includes(filter.value.toLowerCase());

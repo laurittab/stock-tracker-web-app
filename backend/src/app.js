@@ -52,7 +52,9 @@ app.post("/stocks/", async (req, res) => {
     });
     const saved = await newStock.save();
     console.log("saved stock", saved);
+    const stocks = await compileStocksData();
     res.status(200).send({
+      stocks,
       message: `stock ${symbol} with ID ${saved.id} has been added`,
       color: "teal",
     });
