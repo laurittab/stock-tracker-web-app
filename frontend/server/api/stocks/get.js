@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   let finalData;
   const { data, error } = await $fetch(stocksUri /*{ method: method }*/).then(
     (data, error) => {
-      //console.log("api-data", data, error);
+      //console.log("api-get-data", data, error);
       finalData = data;
     }
   );

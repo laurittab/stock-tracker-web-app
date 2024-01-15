@@ -1,3 +1,7 @@
+# Intro
+
+selectable, row listener, empty, searchable, sortable, selectMenue, pagination, loading, pinia store, useStates
+
 # https://nuxt.com/docs/guide/directory-structure/app
 
 # Nuxt 3 Minimal Starter

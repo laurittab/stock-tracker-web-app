@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <h1 class="mb-8 ml-4">Stocks table</h1>
 
     <div>
@@ -18,15 +18,15 @@
           <div
             class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
           >
-            <UInput v-model="updatedFilters" placeholder="Filter stocks..." />
+            <UInput v-model="filter" placeholder="Filter stocks..." />
           </div>
           <div
             class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
           >
             <UButton
               label="Add stock"
-              @click="openForm"
-              :disabled="selection.length !== 0"
+              @click="openForm()"
+              :disabled="selected.length !== 0"
               color="teal"
               :ui="{
                 color: {
@@ -39,7 +39,7 @@
             />
             <UModal v-model="openStatus">
               <div class="p-4">
-                <StockForm :details="selection[0]" />
+                <StockForm :details="selected[0]" />
               </div>
             </UModal>
           </div>
@@ -48,9 +48,8 @@
           >
             <UButton
               label="Remove stock"
-              @mousedown="removeStocks(selection)"
-              @mouseup="reRenders()"
-              :disabled="selection.length < 1"
+              @click="removeStocks(selected)"
+              :disabled="selected.length < 1"
               color="red"
               :ui="{
                 color: {
@@ -68,7 +67,7 @@
             <UButton
               label="Edit stock"
               @click="openForm"
-              :disabled="selection.length !== 1"
+              :disabled="selected.length !== 1"
               color="blue"
               :ui="{
                 color: {
@@ -105,8 +104,8 @@
             icon: 'i-heroicons-circle-stack-20-solid',
             label: 'No items.',
           }"
-          v-model="selection"
-          :rows="filteredRows(updatedFilters, currentStocks)"
+          v-model="selected"
+          :rows="filteredRows(currentStocks)"
           :columns="selectColumns"
           @select="select"
         />
@@ -116,32 +115,16 @@
 </template>
 
 <script setup>
-//selectable, row listener, empty, searchable, sortable, selectMenue, pagination, loading
-import { useTableStore } from "@/stores/table";
-const {
-  tableKey,
-  stockDetailss,
-  filters,
-  reRenders,
-  select,
-  openForm,
-  setStocks,
-  removeStocks,
-  incrementKey,
-  updatedKey,
-  selection,
-  openStatus,
-  currentStocks,
-  updatedFilters,
-} = useTableStore();
-const { stocks } = await getStocks();
-setStocks(stocks);
-const selectColumns = ref([...columns]); //use store or possibly shallow ref
+const { openForm, setStocks, openStatus, currentStocks } = useTableStore();
+const filter = useStockFilter();
 const page = useStockPage();
 const pageCount = 10;
 const pending = false; //const { pending, data: stockDetails } = await useLazyAsyncData('stockDetails', () => $fetch('/api/stock-details'))
-const filteredRows = (aFilter, stockList) => {
-  if (!aFilter) {
+const selected = useSelectedStocks();
+const selectColumns = ref([...columns]); //use store or possibly shallow ref
+const { stocks } = await getStocks();
+const filteredRows = (stockList) => {
+  if (!filter.value) {
     return stockList.slice(
       (page.value - 1) * pageCount,
       page.value * pageCount
@@ -150,11 +133,26 @@ const filteredRows = (aFilter, stockList) => {
   return stockList
     .filter((stock) => {
       return Object.values(stock).some((value) => {
-        return String(value).toLowerCase().includes(aFilter.toLowerCase());
+        return String(value).toLowerCase().includes(filter.value.toLowerCase());
       });
     })
     .slice((page.value - 1) * pageCount, page.value * pageCount);
 };
+const removeStocks = async (stockSelection) => {
+  const { stocks, message, color } = await deleteStock(stockSelection);
+  selected.value = [];
+  setStocks(stocks);
+  createToast(message, color);
+};
+function select(row) {
+  const index = selected.findIndex((item) => item.id === row.id);
+  if (index === -1) {
+    selected.push(row);
+  } else {
+    selected.splice(index, 1);
+  }
+}
+setStocks(stocks);
 </script>
 
 <style scoped></style>

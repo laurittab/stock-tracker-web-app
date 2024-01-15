@@ -15,9 +15,9 @@
       <UInput v-model="state.comments" />
     </UFormGroup>
     <UFormGroup label="Target price:" name="target_price">
-      <UInput v-model="state.target_price" />
+      <UInput v-model="state.target_price" type="number" />
     </UFormGroup>
-    <UFormGroup label="Bottom price:" name="bottom_price">
+    <UFormGroup label="Bottom price:" name="bottom_price" type="number">
       <UInput v-model="state.bottom_price" />
     </UFormGroup>
     <UButton type="submit"> Submit </UButton>
@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 import { useTableStore } from "@/stores/table";
-const { reRenders, setStocks, closeForm, incrementKey } = useTableStore();
+const { setStocks, closeForm } = useTableStore();
 const { details } = defineProps(["details"]);
 const state = reactive({
   id: details?.id || undefined,
@@ -63,11 +63,12 @@ async function onSubmit(event: FormSubmitEvent<any>) {
   if (details) {
     const { stocks, message, color } = await updateStock(reqBody);
     setStocks(stocks);
+    createToast(message, color);
   } else {
     const { stocks, message, color } = await addStock(reqBody);
     setStocks(stocks);
+    createToast(message, color);
   }
-  reRenders();
   closeForm();
 }
 </script>

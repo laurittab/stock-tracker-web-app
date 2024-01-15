@@ -23,10 +23,6 @@ const links = [
     to: "/",
   },
   {
-    label: "Add stock",
-    to: "/add",
-  },
-  {
     label: "Latest news",
     to: "/news",
   },

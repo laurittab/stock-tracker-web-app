@@ -1,3 +1,4 @@
+//attempting to locate of tickers NOT WORKING
 import fetch from "node-fetch";
 
 import pkg from "scramjet";

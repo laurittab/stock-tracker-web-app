@@ -15,7 +15,7 @@ export const getStocks = async () => {
     },
     error,
   } = await useFetch(`/api/stocks/get`);
-  //console.log("getStocks:", message, color, error);
+  console.log("getStocks response:", stocks.length, message, color, error);
   return { stocks, message, color };
 };
 
@@ -29,7 +29,7 @@ export const addStock = async (reqBody) => {
     method: "post",
     body: reqBody,
   });
-  console.log("addStocks", stocks.length, message, color, error);
+  console.log("addStocks response:", stocks.length, message, color, error);
   return { stocks, message, color };
 };
 
@@ -43,28 +43,28 @@ export const updateStock = async (reqBody) => {
     method: "put",
     body: reqBody,
   });
-  console.log("updateStock:", stocks.length, message, color, error);
+  console.log("updateStock response:", stocks.length, message, color, error);
   return { stocks, message, color };
 };
 
 export const deleteStock = async (selection) => {
   let params = {};
   let count = 1;
-  console.log("deleteStock-selection", selection);
+  console.log("deleteStock-selection.length", selection.length);
   for (const stock of selection) {
     params[`id${count}`] = stock.id;
     count++;
   }
-  //console.log("deleteStock-params", params);
+  console.log("deleteStock-params", params);
   const {
     data: {
-      value: { message, color },
+      value: { stocks, message, color },
     },
     error,
   } = await useFetch(`/api/stocks/delete`, {
     method: "delete",
     query: params,
   });
-  console.log("deleteStock", message, color, error);
-  return { message, color };
+  console.log("deleteStock response:", stocks.length, message, color, error);
+  return { stocks, message, color };
 };

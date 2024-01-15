@@ -94,7 +94,9 @@ app.delete("/stocks/", async (req, res) => {
       console.log("deleting stock id:", params[param]);
       await Stock.findByIdAndDelete(params[param]);
     }
+    const stocks = await compileStocksData();
     res.status(200).send({
+      stocks,
       message: `${count} stock(s) deleted`,
       color: "teal",
     });
