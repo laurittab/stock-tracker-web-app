@@ -1,16 +1,5 @@
 <template>
   <div class="">
-    <button class="btn" @click="incrementKey">update tableKey</button><br />
-    <div :key="updatedKey">
-      tableKey {{ tableKey }} updatedKey {{ updatedKey }}
-      <br />stockDetailss.length {{ stockDetailss.length }} currentStocks.length
-      {{ currentStocks.length }} <br />try new filter for filteredRows
-      {{
-        [1, 2, 3].filter((element) => {
-          return element > 1;
-        })
-      }}<br />
-    </div>
     <h1 class="mb-8 ml-4">Stocks table</h1>
 
     <div>
@@ -29,7 +18,7 @@
           <div
             class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
           >
-            <UInput v-model="filter" placeholder="Filter stocks..." />
+            <UInput v-model="updatedFilters" placeholder="Filter stocks..." />
           </div>
           <div
             class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
@@ -50,7 +39,7 @@
             />
             <UModal v-model="openStatus">
               <div class="p-4">
-                <StockForm :details="selecteds[0]" />
+                <StockForm :details="selection[0]" />
               </div>
             </UModal>
           </div>
@@ -117,7 +106,7 @@
             label: 'No items.',
           }"
           v-model="selection"
-          :rows="filteredRows"
+          :rows="filteredRows(updatedFilters, currentStocks)"
           :columns="selectColumns"
           @select="select"
         />
@@ -132,7 +121,7 @@ import { useTableStore } from "@/stores/table";
 const {
   tableKey,
   stockDetailss,
-  selecteds,
+  filters,
   reRenders,
   select,
   openForm,
@@ -143,29 +132,29 @@ const {
   selection,
   openStatus,
   currentStocks,
+  updatedFilters,
 } = useTableStore();
 const { stocks } = await getStocks();
 setStocks(stocks);
 const selectColumns = ref([...columns]); //use store or possibly shallow ref
-const filter = useStockFilter();
 const page = useStockPage();
 const pageCount = 10;
 const pending = false; //const { pending, data: stockDetails } = await useLazyAsyncData('stockDetails', () => $fetch('/api/stock-details'))
-const filteredRows = computed(() => {
-  if (!filter.value) {
-    return stockDetailss.slice(
+const filteredRows = (aFilter, stockList) => {
+  if (!aFilter) {
+    return stockList.slice(
       (page.value - 1) * pageCount,
       page.value * pageCount
     );
   }
-  return stockDetailss
-    .filter((person) => {
-      return Object.values(person).some((value) => {
-        return String(value).toLowerCase().includes(filter.value.toLowerCase());
+  return stockList
+    .filter((stock) => {
+      return Object.values(stock).some((value) => {
+        return String(value).toLowerCase().includes(aFilter.toLowerCase());
       });
     })
     .slice((page.value - 1) * pageCount, page.value * pageCount);
-});
+};
 </script>
 
 <style scoped></style>

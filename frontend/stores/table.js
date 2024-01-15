@@ -8,6 +8,7 @@ export const useTableStore = defineStore("table", () => {
   const filter = ref("");
   const page = ref(1);
   const pageCount = 10;
+  const filters = ref("");
 
   function setStocks(stocks) {
     console.log("store-setStocks-stocks.length", stocks.length);
@@ -57,6 +58,7 @@ export const useTableStore = defineStore("table", () => {
     }
   }
   const updatedKey = computed(() => tableKey);
+  const updatedFilters = computed(() => filters);
   const selection = computed(() => selecteds);
   const openStatus = computed(() => isOpens);
   const currentStocks = computed(() => stockDetailss);
@@ -84,6 +86,7 @@ export const useTableStore = defineStore("table", () => {
     selecteds,
     isOpens,
     filter,
+    filters,
     page,
     pageCount,
     reRenders,
@@ -98,5 +101,6 @@ export const useTableStore = defineStore("table", () => {
     selection,
     openStatus,
     currentStocks,
+    updatedFilters,
   };
 });

@@ -61,15 +61,13 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     bottom_price: event.data.bottom_price,
   };
   if (details) {
-    const { message, color } = await updateStock(reqBody);
-    createToast(message, color);
+    const { stocks, message, color } = await updateStock(reqBody);
+    setStocks(stocks);
   } else {
     const { stocks, message, color } = await addStock(reqBody);
     setStocks(stocks);
-    //createToast(message, color);
   }
   reRenders();
-  incrementKey();
   closeForm();
 }
 </script>

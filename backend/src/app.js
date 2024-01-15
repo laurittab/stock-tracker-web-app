@@ -74,7 +74,9 @@ app.put("/stocks/", async (req, res) => {
       bottom_price,
     }).exec();
     console.log("updated stock", data);
+    const stocks = await compileStocksData();
     res.status(200).send({
+      stocks,
       message: `stock ${symbol} has been updated`,
       color: "teal",
     });
