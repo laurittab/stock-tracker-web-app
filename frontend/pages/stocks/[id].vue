@@ -10,6 +10,15 @@
 
 <script setup>
 const { id } = useRoute().params;
+const { loggedIn, login, loggedInStatus } = useAuthStore();
+console.log("stock-id-loggedInStatus.value:", loggedInStatus.value);
+if (!loggedInStatus.value) {
+  await navigateTo("/login");
+}
+const loginToken = useCookie("access-token");
+if (!loginToken.value) {
+  await navigateTo("/signup");
+}
 const uri = "https://fakestoreapi.com/products/" + id;
 const { data: product } = await useFetch(uri, { key: id });
 if (!product.value) {

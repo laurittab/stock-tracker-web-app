@@ -22,6 +22,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     currencyKey: process.env.CURRENCY_API_KEY,
     stocksUri: process.env.STOCKS_URI,
+    signupUri: process.env.SIGNUP_URI,
+    loginUri: process.env.LOGIN_URI,
     alphaVantageKey: process.env.ALPHA_VANTAGE_API_KEY,
     public: {
       somekey: "this can be exposed to frontend",

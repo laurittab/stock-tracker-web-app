@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     method: "delete",
     query: params,
   }).then((data, error) => {
-    //console.log("api-delete-data", data, error);
+    //console.log("api-stocks-delete-data", data, error);
     finalData = data;
   });
   return finalData;

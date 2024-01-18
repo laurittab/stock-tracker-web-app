@@ -6,6 +6,14 @@ const db = mongoose
 
 const { Schema } = mongoose;
 
+const userSchema = new Schema(
+  {
+    userId: String,
+    email: String, // String is shorthand for {type: String}
+    password: String,
+  },
+  { timestamps: true }
+);
 const stockSchema = new Schema(
   {
     symbol: String, // String is shorthand for {type: String}
@@ -23,6 +31,7 @@ const overviewSchema = new Schema(
   },
   { timestamps: true }
 );
+export const User = mongoose.model("User", userSchema);
 export const Stock = mongoose.model("Stock", stockSchema);
 export const Overview = mongoose.model("Overview", overviewSchema);
 //await Stock.findByIdAndDelete("659ee5c2d3480e8eb990a8e8");

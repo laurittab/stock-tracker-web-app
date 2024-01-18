@@ -15,7 +15,7 @@ export const getStocks = async () => {
     },
     error,
   } = await useFetch(`/api/stocks/get`);
-  console.log("getStocks response:", stocks.length, message, color, error);
+  console.log("getStocks-response", stocks.length, message, color, error);
   return { stocks, message, color };
 };
 
@@ -29,7 +29,7 @@ export const addStock = async (reqBody) => {
     method: "post",
     body: reqBody,
   });
-  console.log("addStocks response:", stocks.length, message, color, error);
+  console.log("addStocks-response", stocks.length, message, color, error);
   return { stocks, message, color };
 };
 
@@ -43,7 +43,7 @@ export const updateStock = async (reqBody) => {
     method: "put",
     body: reqBody,
   });
-  console.log("updateStock response:", stocks.length, message, color, error);
+  console.log("updateStock-response", stocks.length, message, color, error);
   return { stocks, message, color };
 };
 
@@ -65,6 +65,40 @@ export const deleteStock = async (selection) => {
     method: "delete",
     query: params,
   });
-  console.log("deleteStock response:", stocks.length, message, color, error);
+  console.log("deleteStock-response", stocks.length, message, color, error);
   return { stocks, message, color };
+};
+
+export const addUser = async (reqBody) => {
+  try {
+    const {
+      data: {
+        value: { token, message, color },
+      },
+      error,
+    } = await useFetch(`/api/auth/post`, {
+      method: "post",
+      body: reqBody,
+    });
+    console.log("addUser-response", token, message, color, error);
+    return { token, message, color };
+  } catch (error) {
+    return { message, color };
+  }
+};
+
+export const findUser = async (params) => {
+  //try with params, e.g. :id in backend server side
+  console.log("findUser-params", params);
+  const {
+    data: {
+      value: { token, message, color },
+    },
+    error,
+  } = await useFetch(`/api/auth/get`, {
+    method: "get",
+    query: params,
+  });
+  console.log("findUser-response", token, message, color, error);
+  return { token, message, color };
 };

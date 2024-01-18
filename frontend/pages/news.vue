@@ -8,13 +8,21 @@
 </template>
 
 <script setup>
+const { loggedIn, login, loggedInStatus } = useAuthStore();
+console.log("news-loggedInStatus.value:", loggedInStatus.value);
+if (!loggedInStatus.value) {
+  await navigateTo("/login");
+}
+const loginToken = useCookie("access-token");
+if (!loginToken.value) {
+  await navigateTo("/signup");
+}
 const {
   data: {
     value: { marketStatus, newsSentiment },
   },
 } = await useFetch("/api/news/global");
 const news = newsSentiment.feed;
-//console.log("**************************", news);
 </script>
 
 <style scoped></style>

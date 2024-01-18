@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     method: "put",
     body: newStock,
   }).then((data, error) => {
-    //console.log("api-put-data", data, error);
+    //console.log("api-stocks-put-data", data, error);
     finalData = data;
   });
   return finalData;

@@ -4,7 +4,10 @@ import cors from "cors";
 import "./database/index.js";
 //import "./services/fundamentals.js";
 import compileStocksData from "./services/compileStockData.js";
-import { Stock, Overview } from "./database/index.js";
+import { Stock, Overview, User } from "./database/index.js";
+import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
 
 dotenv.config();
 const app = express();
@@ -19,7 +22,7 @@ app.get("/", async (req, res) => {
 app.get("/stocks", async (req, res) => {
   try {
     const stocks = await compileStocksData(); //Overview.find({}).exec(); //compileStocksData();
-    console.log("all stocks retrieved");
+    console.log("get-stocks");
     res.status(200).send({
       stocks: stocks,
       message: `${stocks.length} stocks retrieved`,
@@ -32,7 +35,7 @@ app.get("/stocks", async (req, res) => {
 app.get("/stocks/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    console.log("params", id);
+    console.log("get-stocks-id", id);
     const stock = await Stock.findById(id).exec();
     res
       .status(200)
@@ -51,7 +54,7 @@ app.post("/stocks/", async (req, res) => {
       bottom_price,
     });
     const saved = await newStock.save();
-    console.log("saved stock", saved);
+    console.log("post-stocks-saved", saved);
     const stocks = await compileStocksData();
     res.status(200).send({
       stocks,
@@ -65,7 +68,14 @@ app.post("/stocks/", async (req, res) => {
 app.put("/stocks/", async (req, res) => {
   const { id, symbol, comments, target_price, bottom_price } = req.body;
   //const update = req.body;
-  console.log("put req.body", id, symbol, comments, target_price, bottom_price);
+  console.log(
+    "put-stocks-destructured-req.body",
+    id,
+    symbol,
+    comments,
+    target_price,
+    bottom_price
+  );
   try {
     const data = await Stock.findByIdAndUpdate(id, {
       symbol,
@@ -73,7 +83,7 @@ app.put("/stocks/", async (req, res) => {
       target_price,
       bottom_price,
     }).exec();
-    console.log("updated stock", data);
+    console.log("put-stocks-data", data);
     const stocks = await compileStocksData();
     res.status(200).send({
       stocks,
@@ -87,7 +97,7 @@ app.put("/stocks/", async (req, res) => {
 app.delete("/stocks/", async (req, res) => {
   let count = 0;
   const params = req.query;
-  console.log("params", params);
+  console.log("delete-stocks-params", params);
   try {
     for (const param in params) {
       count++;
@@ -102,6 +112,64 @@ app.delete("/stocks/", async (req, res) => {
     });
   } catch (error) {
     res.send("Error deleting stocks");
+  }
+});
+app.post("/signup/", async (req, res) => {
+  const { email, password } = req.body;
+  console.log("signup-password", password);
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const userId = uuidv4();
+  const token = nanoid(256);
+  try {
+    const checkUser = await User.findOne({ email: email }); //.exec();
+    console.log("signup-checkUser:", checkUser);
+    if (checkUser) {
+      return res.status(200).send({
+        message: "This email has already been registered, please go to login",
+        color: "red",
+      });
+      return;
+    }
+    let newUser = User({
+      userId: userId,
+      email: email,
+      password: hashedPassword,
+    });
+
+    const saved = await newUser.save();
+    console.log("signup-saved", saved, "token", token);
+    res.status(200).send({
+      token: token,
+      message: `Your new login is username: ${email} and the password you entered`,
+      color: "teal",
+    });
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+app.get("/login/", async (req, res) => {
+  const { email, password } = req.query;
+  console.log("login-destructured-params", email, password);
+  try {
+    const checkUser = await User.findOne({ email: email });
+    console.log("login-checkUser", checkUser);
+    const checkPassword = await bcrypt.compare(password, checkUser.password);
+    console.log("login-checkPassword", checkPassword);
+    if (checkUser && checkPassword) {
+      //const userId = uuidv4();
+      const token = nanoid(256);
+      return res.status(200).send({
+        token: token,
+        message: `You are now logged in with username ${email}`,
+        color: "teal",
+      });
+    }
+    res.status(200).send({
+      message: "Either your username or password are incorrect",
+      color: "red",
+    });
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 });
 

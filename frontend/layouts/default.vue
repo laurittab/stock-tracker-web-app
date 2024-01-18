@@ -5,13 +5,15 @@
         <CurrencySelector />
       </div>
       <div>
-        <button
+        <NuxtLink
+          v-if="loggedInStatus"
+          to="/login"
           type="submit"
-          @click="signOut"
+          @click="logout"
           class="text-sm hover:font-bold soft"
         >
-          Sign out
-        </button>
+          Sign out</NuxtLink
+        >
       </div>
     </header>
     <!--output page content using slot -->
@@ -37,11 +39,8 @@
   </div>
 </template>
 <script setup>
-const signOut = async () => {
-  const loggedIn = useLoginStatus();
-  loggedIn.value = false;
-  await navigateTo("/login");
-};
+import { useAuthStore } from "@/stores/authentication";
+const { loggedIn, logout, loggedInStatus } = useAuthStore();
 </script>
 
 <style scoped>

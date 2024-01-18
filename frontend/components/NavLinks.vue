@@ -16,6 +16,10 @@
 const links = [
   {
     label: "",
+    to: "/signup",
+  },
+  {
+    label: "",
     to: "/login",
   },
   {

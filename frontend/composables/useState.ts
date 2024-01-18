@@ -7,5 +7,4 @@ export const useAvailableColors = () =>
   useState("available-colors", () => ["red", "blue", "yellow", "green"]);
 export const useStockFilter = () => useState("stock-filter", () => "");
 export const useStockPage = () => useState("stock-page", () => 1);
-export const useLoginStatus = () => useState("logged-in", () => false);
 export const useSelectedStocks = () => useState("selected-stocks", () => []);

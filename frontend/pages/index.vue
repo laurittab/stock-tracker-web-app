@@ -115,6 +115,15 @@
 </template>
 
 <script setup>
+const { loggedIn, login, loggedInStatus } = useAuthStore();
+console.log("index-loggedInStatus.value:", loggedInStatus.value);
+if (!loggedInStatus.value) {
+  await navigateTo("/login");
+}
+const loginToken = useCookie("access-token");
+if (!loginToken.value) {
+  await navigateTo("/signup");
+}
 const { openForm, setStocks, openStatus, currentStocks } = useTableStore();
 const filter = useStockFilter();
 const page = useStockPage();
@@ -153,6 +162,9 @@ function select(row) {
   }
 }
 setStocks(stocks);
+definePageMeta({
+  //layout: "",
+});
 </script>
 
 <style scoped></style>

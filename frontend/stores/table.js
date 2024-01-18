@@ -3,9 +3,8 @@ import { defineStore } from "pinia";
 export const useTableStore = defineStore("table", () => {
   const stockDetails = ref([]);
   const isOpen = ref(false);
-
   function setStocks(stocks) {
-    console.log("store-setStocks-stocks.length", stocks.length);
+    console.log("store-table-setStocks-stocks.length", stocks.length);
     this.stockDetails = stocks;
   }
   function openForm() {
@@ -14,10 +13,8 @@ export const useTableStore = defineStore("table", () => {
   function closeForm() {
     this.isOpen = false;
   }
-
   const openStatus = computed(() => isOpen);
   const currentStocks = computed(() => stockDetails);
-
   return {
     isOpen,
     openForm,

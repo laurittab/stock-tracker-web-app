@@ -34,7 +34,7 @@
         <h2
           class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
         >
-          Login to your account
+          Sign up to use the app
         </h2>
       </div>
 
@@ -91,20 +91,19 @@
 
           <div>
             <UButton
-              @click="signIn"
+              @click="signUp"
               class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Sign up
             </UButton>
           </div>
         </form>
-
         <p class="mt-10 text-center text-sm text-gray-500">
-          Need to signed up?
+          Already signed up?
           <NuxtLink
             class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            to="/signup"
-            >Sign up now</NuxtLink
+            to="/login"
+            >Go to login</NuxtLink
           >
         </p>
       </div>
@@ -113,21 +112,26 @@
 </template>
 
 <script setup>
-const { loggedIn, loggedInStatus, login } = useAuthStore();
+definePageMeta({
+  layout: "",
+});
+import { useAuthStore } from "@/stores/authentication";
+const { loggedIn, login, loggedInStatus } = useAuthStore();
 const email = ref("");
 const password = ref("");
 const expirationDate = new Date();
-expirationDate.setDate(expirationDate.getDate() + 30);
-console.log("login-expirationDate", expirationDate);
+expirationDate.setDate(expirationDate.getDate() + 1);
+console.log("signup-expirationDate", expirationDate);
 const loginToken = useCookie("access-token", { expires: expirationDate });
-const signIn = async () => {
+
+const signUp = async () => {
   const reqBody = {
     email: email.value,
     password: password.value,
   };
-  console.log("login-signIn-reqBody", reqBody);
-  const { token, message, color } = await findUser(reqBody);
-  console.log("login-signIn-response", token, message, color);
+  console.log("signup-signUp-reqBody", reqBody);
+  const { token, message, color } = await addUser(reqBody);
+  console.log("signup-response", token, message, color);
   if (token) {
     loginToken.value = token;
     login();
@@ -137,8 +141,5 @@ const signIn = async () => {
   email.value = "";
   password.value = "";
 };
-
-definePageMeta({
-  //layout: "",
-});
+definePageMeta({});
 </script>
