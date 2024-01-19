@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 import { useTableStore } from "@/stores/table";
-const { setStocks, closeForm } = useTableStore();
+const { stockDetails, currentStocks, setStocks, closeForm } = useTableStore();
 const { details } = defineProps(["details"]);
 const state = reactive({
   id: details?.id || undefined,
@@ -52,6 +52,11 @@ const validate = (state: any): FormError[] => {
     });
   return errors;
 };
+const checkSymbol = (symbol: string, stocksList: Array<any>): any => {
+  const result = stocksList.find((element) => element.symbol == symbol);
+  console.log("stockform-checksymbol-result", !!result);
+  return !!result;
+};
 async function onSubmit(event: FormSubmitEvent<any>) {
   const reqBody = {
     id: event.data.id,
@@ -65,7 +70,13 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     setStocks(stocks);
     createToast(message, color);
   } else {
-    const { stocks, message, color } = await addStock(reqBody);
+    const symbolCheck = checkSymbol(reqBody.symbol, currentStocks.value);
+    if (symbolCheck) {
+      createToast("This ticker is already in the stocks table", "red");
+      closeForm();
+      return;
+    }
+    const { stocks, message, color } = (await addStock(reqBody)) as any;
     setStocks(stocks);
     createToast(message, color);
   }

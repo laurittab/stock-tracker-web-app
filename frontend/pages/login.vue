@@ -39,7 +39,7 @@
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST" @submit="">
+        <UForm class="space-y-6" action="#" method="POST" @submit="onSubmit">
           <div>
             <label
               for="email"
@@ -91,13 +91,13 @@
 
           <div>
             <UButton
-              @click="signIn"
+              type="submit"
               class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Sign in
             </UButton>
           </div>
-        </form>
+        </UForm>
 
         <p class="mt-10 text-center text-sm text-gray-500">
           Need to signed up?
@@ -114,28 +114,29 @@
 
 <script setup>
 const { loggedIn, loggedInStatus, login } = useAuthStore();
-const email = ref("");
-const password = ref("");
+const email = ref("ritae@post.com");
+const password = ref("thatone!");
 const expirationDate = new Date();
 expirationDate.setDate(expirationDate.getDate() + 30);
 console.log("login-expirationDate", expirationDate);
 const loginToken = useCookie("access-token", { expires: expirationDate });
-const signIn = async () => {
+const onSubmit = async (event) => {
+  console.log("login-onsubmit-event", event);
   const reqBody = {
     email: email.value,
     password: password.value,
   };
-  console.log("login-signIn-reqBody", reqBody);
+  console.log("login-onSubmit-reqBody", reqBody);
   const { token, message, color } = await findUser(reqBody);
-  console.log("login-signIn-response", token, message, color);
+  console.log("login-onSubmit-response", token, message, color);
   if (token) {
     loginToken.value = token;
     login();
     await navigateTo("/");
   }
   createToast(message, color);
-  email.value = "";
-  password.value = "";
+  //email.value = "";
+  //password.value = "";
 };
 
 definePageMeta({

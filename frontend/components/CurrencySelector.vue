@@ -26,7 +26,10 @@
 </template>
 
 <script setup>
-const currency = useCookie("currency");
+const expirationDate = new Date();
+expirationDate.setDate(expirationDate.getDate() + 90);
+console.log("currencyselector-expirationDate", expirationDate);
+const currency = useCookie("currency", { expires: expirationDate });
 const items = [
   [
     {

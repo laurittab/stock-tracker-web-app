@@ -40,8 +40,10 @@ export const Overview = mongoose.model("Overview", overviewSchema);
 export const symbols = await Stock.distinct("symbol"); //find all symbols
 export default db;
 
-//const peak = await Overview.find({});
-//const peak = await Stock.findById("65a1db430c6016fb3bdcb515").exec();
+//const peak = await Overview.findOne({ symbol: "crkn" });
+//const peak = await Stock.findById("65a9ae6526c171b3ddaf8113").exec();
 //const peak = await Overview.findOne({ symbol: "ai" }).exec();
-//const peak = await Stock.findByIdAndDelete("65a1db430c6016fb3bdcb515").exec();
-//console.log("peak", peak[0].fundamentals.EPS);
+//const peak = await Overview.findByIdAndDelete(
+//  "659d5a12139d41202f78eb76"
+//).exec();
+//console.log("peak", peak);

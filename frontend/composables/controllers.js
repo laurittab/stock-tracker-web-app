@@ -20,17 +20,21 @@ export const getStocks = async () => {
 };
 
 export const addStock = async (reqBody) => {
-  const {
-    data: {
-      value: { stocks, message, color },
-    },
-    error,
-  } = await useFetch(`/api/stocks/post`, {
-    method: "post",
-    body: reqBody,
-  });
-  console.log("addStocks-response", stocks.length, message, color, error);
-  return { stocks, message, color };
+  try {
+    const {
+      data: {
+        value: { stocks, message, color },
+      },
+      error,
+    } = await useFetch(`/api/stocks/post`, {
+      method: "post",
+      body: reqBody,
+    });
+    console.log("addStocks-response", stocks.length, message, color, error);
+    return { stocks, message, color };
+  } catch (error) {
+    return error;
+  }
 };
 
 export const updateStock = async (reqBody) => {
@@ -83,7 +87,7 @@ export const addUser = async (reqBody) => {
     console.log("addUser-response", token, message, color, error);
     return { token, message, color };
   } catch (error) {
-    return { message, color };
+    return error;
   }
 };
 

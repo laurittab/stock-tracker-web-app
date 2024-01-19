@@ -24,6 +24,7 @@
             class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
           >
             <UButton
+              icon="i-mdi-file-document-plus-outline"
               label="Add stock"
               @click="openForm()"
               :disabled="selected.length !== 0"
@@ -47,6 +48,7 @@
             class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
           >
             <UButton
+              icon="i-mdi-delete-outline"
               label="Remove stock"
               @click="removeStocks(selected)"
               :disabled="selected.length < 1"
@@ -65,6 +67,7 @@
             class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700"
           >
             <UButton
+              icon="i-mdi-pencil-outline"
               label="Edit stock"
               @click="openForm"
               :disabled="selected.length !== 1"

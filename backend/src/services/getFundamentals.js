@@ -1,0 +1,32 @@
+import axios from "axios";
+import dotenv from "dotenv";
+import { symbols, Overview } from "../database/index.js";
+
+dotenv.config();
+
+//console.log("symbols", symbols);
+//console.log(String(symbols));
+
+const getFundamentals = async (symbol) => {
+  //for (const symbol of tickersArray) {
+  const checkFundamentals = await Overview.findOne({ symbol: symbol });
+  if (checkFundamentals.symbol === symbol) {
+    console.log("getFundamentals - fundamentals already exist");
+    return true;
+  }
+  const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
+  const { data } = await axios.get(url);
+  if (!Object.keys(data).length) {
+    return false;
+  }
+  let newOverview = Overview({
+    symbol: symbol,
+    fundamentals: data,
+  });
+  const saved = await newOverview.save();
+  console.log("saved", saved);
+  return true;
+  // }
+};
+export default getFundamentals;
+//await getFundamentals(symbols);

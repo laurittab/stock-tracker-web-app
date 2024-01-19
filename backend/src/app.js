@@ -4,6 +4,7 @@ import cors from "cors";
 import "./database/index.js";
 //import "./services/fundamentals.js";
 import compileStocksData from "./services/compileStockData.js";
+import getFundamentals from "./services/getFundamentals.js";
 import { Stock, Overview, User } from "./database/index.js";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
@@ -39,14 +40,26 @@ app.get("/stocks/:id", async (req, res) => {
     const stock = await Stock.findById(id).exec();
     res
       .status(200)
-      .send({ stock: stock, message: `${stocks.id} retrieved`, color: "teal" });
+      .send({ stock: stock, message: `${stock.id} retrieved`, color: "teal" });
   } catch (error) {
     console.log(error);
   }
 });
 app.post("/stocks/", async (req, res) => {
   const { symbol, comments, target_price, bottom_price } = req.body;
+  console.log("post-stocks-req.body", req.body);
+  let stocks;
   try {
+    let fundamentals = await getFundamentals(symbol);
+    console.log("post-stocks-fundamentals", fundamentals);
+    if (!fundamentals) {
+      stocks = await compileStocksData();
+      return res.status(200).send({
+        stocks: stocks,
+        message: `${symbol} has not been saved, as there's not enough data available for this stock`,
+        color: "red",
+      });
+    }
     let newStock = Stock({
       symbol,
       comments,
@@ -55,9 +68,9 @@ app.post("/stocks/", async (req, res) => {
     });
     const saved = await newStock.save();
     console.log("post-stocks-saved", saved);
-    const stocks = await compileStocksData();
+    stocks = await compileStocksData();
     res.status(200).send({
-      stocks,
+      stocks: stocks,
       message: `stock ${symbol} with ID ${saved.id} has been added`,
       color: "teal",
     });
@@ -155,18 +168,17 @@ app.get("/login/", async (req, res) => {
     console.log("login-checkUser", checkUser);
     const checkPassword = await bcrypt.compare(password, checkUser.password);
     console.log("login-checkPassword", checkPassword);
-    if (checkUser && checkPassword) {
-      //const userId = uuidv4();
-      const token = nanoid(256);
+    if (!Boolean(checkUser) || !checkPassword) {
       return res.status(200).send({
-        token: token,
-        message: `You are now logged in with username ${email}`,
-        color: "teal",
+        message: "Either your username or password are incorrect",
+        color: "red",
       });
     }
-    res.status(200).send({
-      message: "Either your username or password are incorrect",
-      color: "red",
+    const token = nanoid(256);
+    return res.status(200).send({
+      token: token,
+      message: `You are now logged in with username ${email}`,
+      color: "teal",
     });
   } catch (error) {
     res.status(400).send(error.message);
