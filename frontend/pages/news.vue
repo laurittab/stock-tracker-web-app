@@ -19,11 +19,10 @@ if (!loginToken.value) {
 }
 const {
   data: {
-    value: { marketStatus, newsSentiment },
+    value: { newsSentiment },
   },
-} = await useFetch("/api/news/global");
+} = await useFetch("/api/market/news");
 const news = newsSentiment.feed;
 </script>
 
 <style scoped></style>
-//{ data: { marketStatus, newsSentiment },}

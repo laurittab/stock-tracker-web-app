@@ -1,5 +1,5 @@
 const newsSentiment = {
-  items: "50",
+  items: "55",
   sentiment_score_definition:
     "x <= -0.35: Bearish; -0.35 < x <= -0.15: Somewhat-Bearish; -0.15 < x < 0.15: Neutral; 0.15 <= x < 0.35: Somewhat_Bullish; x >= 0.35: Bullish",
   relevance_score_definition:

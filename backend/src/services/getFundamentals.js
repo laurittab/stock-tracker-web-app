@@ -8,25 +8,27 @@ dotenv.config();
 //console.log(String(symbols));
 
 const getFundamentals = async (symbol) => {
-  //for (const symbol of tickersArray) {
-  const checkFundamentals = await Overview.findOne({ symbol: symbol });
-  if (checkFundamentals.symbol === symbol) {
-    console.log("getFundamentals - fundamentals already exist");
+  try {
+    const checkFundamentals = await Overview.findOne({ symbol: symbol }).exec();
+    if (checkFundamentals) {
+      console.log("getFundamentals - fundamentals already exist");
+      return true;
+    }
+    const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
+    const { data } = await axios.get(url);
+    if (!Object.keys(data).length) {
+      return false;
+    }
+    let newOverview = Overview({
+      symbol: symbol,
+      fundamentals: data,
+    });
+    const saved = await newOverview.save();
+    console.log("saved", saved);
     return true;
+    // }
+  } catch (error) {
+    console.log(error);
   }
-  const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${process.env.ALPHA_VANTAGE_API_KEY}`;
-  const { data } = await axios.get(url);
-  if (!Object.keys(data).length) {
-    return false;
-  }
-  let newOverview = Overview({
-    symbol: symbol,
-    fundamentals: data,
-  });
-  const saved = await newOverview.save();
-  console.log("saved", saved);
-  return true;
-  // }
 };
 export default getFundamentals;
-//await getFundamentals(symbols);

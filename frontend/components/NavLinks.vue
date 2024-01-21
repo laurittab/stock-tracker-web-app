@@ -7,7 +7,7 @@
       padding: 'p-0 ps-4',
       active: 'text-violet-900 dark:text-violet-800 font-semibold',
       inactive:
-        'border-transparent hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300',
+        'border-transparent hover:border-gray-400 dark:hover:border-gray-500 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300',
     }"
   />
 </template>

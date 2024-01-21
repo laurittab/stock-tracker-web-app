@@ -5,9 +5,6 @@
     class="space-y-4"
     @submit="onSubmit"
   >
-    <UFormGroup v-if="details?.id" label="ID:" name="id">
-      <UInput v-model="state.id" />
-    </UFormGroup>
     <UFormGroup label="Stock symbol:" name="symbol">
       <UInput v-model="state.symbol" />
     </UFormGroup>
@@ -27,6 +24,7 @@
 <script setup lang="ts">
 import type { FormError, FormSubmitEvent } from "#ui/types";
 import { useTableStore } from "@/stores/table";
+const selected = useSelectedStocks();
 const { stockDetails, currentStocks, setStocks, closeForm } = useTableStore();
 const { details } = defineProps(["details"]);
 const state = reactive({
@@ -69,6 +67,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     const { stocks, message, color } = await updateStock(reqBody);
     setStocks(stocks);
     createToast(message, color);
+    selected.value = [];
   } else {
     const symbolCheck = checkSymbol(reqBody.symbol, currentStocks.value);
     if (symbolCheck) {

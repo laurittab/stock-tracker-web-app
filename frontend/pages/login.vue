@@ -44,7 +44,7 @@
             <label
               for="email"
               class="block text-sm font-medium leading-6 text-gray-900"
-              >Email address: ritae@post.com</label
+              >Email address:</label
             >
             <div class="mt-2">
               <input
@@ -66,7 +66,7 @@
                 for="password"
                 class="block text-sm font-medium leading-6 text-gray-900"
                 placeholder="strong4$Password"
-                >Password: thatone!</label
+                >Password:</label
               >
               <div class="text-sm">
                 <a
@@ -114,8 +114,8 @@
 
 <script setup>
 const { loggedIn, loggedInStatus, login } = useAuthStore();
-const email = ref("ritae@post.com");
-const password = ref("thatone!");
+const email = ref("");
+const password = ref("");
 const expirationDate = new Date();
 expirationDate.setDate(expirationDate.getDate() + 30);
 console.log("login-expirationDate", expirationDate);
@@ -140,6 +140,6 @@ const onSubmit = async (event) => {
 };
 
 definePageMeta({
-  //layout: "",
+  layout: "preLogin",
 });
 </script>

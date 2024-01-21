@@ -34,13 +34,8 @@ export const columns = [
     sortable: true,
   },
   {
-    key: "eps:",
+    key: "eps",
     label: "EPS",
-    sortable: true,
-  },
-  {
-    key: "buy",
-    label: "Buy?",
     sortable: true,
   },
   {
@@ -51,11 +46,6 @@ export const columns = [
   {
     key: "bottom_price",
     label: "Bottom Price",
-    sortable: true,
-  },
-  {
-    key: "esitmated_increase",
-    label: "Estimated Increase",
     sortable: true,
   },
   {

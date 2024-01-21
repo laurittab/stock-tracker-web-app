@@ -44,7 +44,7 @@
             <label
               for="email"
               class="block text-sm font-medium leading-6 text-gray-900"
-              >Email address: ritae@post.com</label
+              >Email address:</label
             >
             <div class="mt-2">
               <input
@@ -66,15 +66,8 @@
                 for="password"
                 class="block text-sm font-medium leading-6 text-gray-900"
                 placeholder="strong4$Password"
-                >Password: thatone!</label
+                >Password:</label
               >
-              <div class="text-sm">
-                <a
-                  href="#"
-                  class="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >Forgot password?</a
-                >
-              </div>
             </div>
             <div class="mt-2">
               <input
@@ -141,5 +134,7 @@ const onSubmit = async () => {
   email.value = "";
   password.value = "";
 };
-definePageMeta({});
+definePageMeta({
+  layout: "preLogin",
+});
 </script>

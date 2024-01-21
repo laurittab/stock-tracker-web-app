@@ -10,7 +10,7 @@
           to="/login"
           type="submit"
           @click="logout"
-          class="text-sm hover:font-bold soft"
+          class="text-sm font-semibold text-indigo-600 hover:text-indigo-500"
         >
           Sign out</NuxtLink
         >

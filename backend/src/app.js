@@ -23,7 +23,6 @@ app.get("/", async (req, res) => {
 app.get("/stocks", async (req, res) => {
   try {
     const stocks = await compileStocksData(); //Overview.find({}).exec(); //compileStocksData();
-    console.log("get-stocks");
     res.status(200).send({
       stocks: stocks,
       message: `${stocks.length} stocks retrieved`,

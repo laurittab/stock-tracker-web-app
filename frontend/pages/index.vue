@@ -157,11 +157,11 @@ const removeStocks = async (stockSelection) => {
   createToast(message, color);
 };
 function select(row) {
-  const index = selected.findIndex((item) => item.id === row.id);
+  const index = selected.value.findIndex((item) => item.id === row.id);
   if (index === -1) {
-    selected.push(row);
+    selected.value.push(row);
   } else {
-    selected.splice(index, 1);
+    selected.value.splice(index, 1);
   }
 }
 setStocks(stocks);

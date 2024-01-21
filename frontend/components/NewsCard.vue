@@ -6,7 +6,7 @@
         :alt="`image of ${newsItem.title}`"
         class="pics row-span-full col-span-1"
       />
-      <p class="col-span-3 row-span-1 font-bold">
+      <p class="col-span-3 row-span-1 font-bold text-violet-900">
         {{ newsItem.title }}
       </p>
       <p class="col-span-3 row-span-2">
@@ -22,7 +22,7 @@
         :to="recreateSourceLink(newsItem.source_domain)"
         external
         target="_blank"
-        class="col-span-1 row-span-1 hover:text-blue-500 hover:font-bold"
+        class="col-span-1 row-span-1 hover:text-indigo-900"
       >
         {{ newsItem.source_domain }}
       </NuxtLink>
