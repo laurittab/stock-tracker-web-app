@@ -1,6 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
-import { symbols, Overview } from "../database/index.js";
+import Overview from "../models/overview.js";
 
 dotenv.config();
 

@@ -1,11 +1,12 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import "./database/index.js";
+import database from "./config/mongoose.js";
 //import "./services/fundamentals.js";
 import compileStocksData from "./services/compileStockData.js";
 import getFundamentals from "./services/getFundamentals.js";
-import { Stock, Overview, User } from "./database/index.js";
+import Stock from "./models/stock.js";
+import User from "./models/user.js";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { nanoid } from "nanoid";

@@ -1,8 +1,9 @@
-import { Stock, Overview } from "../database/index.js";
+import Stock from "../models/stock.js";
+import Overview from "../models/overview.js";
 const compileStocksData = async () => {
   const stockData = [];
   try {
-    const stocks = await Stock.find({});
+    const stocks = await Stock.find({}).exec();
     //console.log("stocks", stocks);
     for (const stock of stocks) {
       const compiledStock = {};
