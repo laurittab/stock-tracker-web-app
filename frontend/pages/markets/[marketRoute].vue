@@ -1,15 +1,17 @@
 <template>
   <div>
     <Head>
-      <Title>R's stock item | {{ product.title }}</Title>
-      <Meta name="description" :content="product.description" />
+      <Title>Market Status | {{ status.region }}</Title>
+      <Meta name="description" :content="status.primary_exchanges" />
     </Head>
-    <StockDetails :product="product" />
+    <MarketDetails />
   </div>
 </template>
 
 <script setup>
-const { id } = useRoute().params;
+//const { marketRoute } = useRoute().params;
+const { marketStatus, setStatus, status } = useMarketsStore();
+//const statusDetails = status.value;
 const { loggedIn, login, loggedInStatus } = useAuthStore();
 console.log("stock-id-loggedInStatus.value:", loggedInStatus.value);
 if (!loggedInStatus.value) {
@@ -19,6 +21,7 @@ const loginToken = useCookie("access-token");
 if (!loginToken.value) {
   await navigateTo("/signup");
 }
+/*
 const uri = "https://fakestoreapi.com/products/" + id;
 const { data: product } = await useFetch(uri, { key: id });
 if (!product.value) {
@@ -27,9 +30,9 @@ if (!product.value) {
     statusMessage: "Product not found",
     fatal: true,
   });
-}
+}*/
 definePageMeta({
-  //layout: "stocks",
+  //layout: "",
 });
 </script>
 

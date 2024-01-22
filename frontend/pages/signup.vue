@@ -112,10 +112,7 @@ import { useAuthStore } from "@/stores/authentication";
 const { loggedIn, login, loggedInStatus } = useAuthStore();
 const email = ref("");
 const password = ref("");
-const expirationDate = new Date();
-expirationDate.setDate(expirationDate.getDate() + 1);
-console.log("signup-expirationDate", expirationDate);
-const loginToken = useCookie("access-token", { expires: expirationDate });
+const loginToken = useCookie("access-token", { expires: setExpiration(1) });
 
 const onSubmit = async () => {
   const reqBody = {

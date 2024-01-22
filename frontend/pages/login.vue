@@ -116,10 +116,7 @@
 const { loggedIn, loggedInStatus, login } = useAuthStore();
 const email = ref("");
 const password = ref("");
-const expirationDate = new Date();
-expirationDate.setDate(expirationDate.getDate() + 30);
-console.log("login-expirationDate", expirationDate);
-const loginToken = useCookie("access-token", { expires: expirationDate });
+const loginToken = useCookie("access-token", { expires: setExpiration(30) });
 const onSubmit = async (event) => {
   console.log("login-onsubmit-event", event);
   const reqBody = {

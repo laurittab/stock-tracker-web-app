@@ -12,8 +12,8 @@ export default defineNuxtConfig({
       meta: [{ name: "description", content: "all my stock picks" }],
       link: [
         {
-          // rel: "stylesheet",
-          //   href: "https://fonts.googleapis.com/icon?family=Material+Icons",
+          //rel: "stylesheet",
+          //href: "https://fonts.googleapis.com/icon?family=Material+Icons",
         },
       ],
     },

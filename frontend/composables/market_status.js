@@ -1,4 +1,4 @@
-const marketStatus = {
+const market_status = {
   endpoint: "Global Market Open & Close Status",
   markets: [
     {
@@ -7,7 +7,7 @@ const marketStatus = {
       primary_exchanges: "NASDAQ, NYSE, AMEX, BATS",
       local_open: "09:30",
       local_close: "16:15",
-      current_status: "open",
+      current_status: "closed",
       notes: "",
     },
     {
@@ -16,7 +16,7 @@ const marketStatus = {
       primary_exchanges: "Toronto, Toronto Ventures",
       local_open: "09:30",
       local_close: "16:00",
-      current_status: "open",
+      current_status: "closed",
       notes: "",
     },
     {
@@ -34,7 +34,7 @@ const marketStatus = {
       primary_exchanges: "XETRA, Berlin, Frankfurt, Munich, Stuttgart",
       local_open: "08:00",
       local_close: "20:00",
-      current_status: "open",
+      current_status: "closed",
       notes: "",
     },
     {
@@ -106,7 +106,7 @@ const marketStatus = {
       primary_exchanges: "Sao Paolo",
       local_open: "10:00",
       local_close: "17:30",
-      current_status: "open",
+      current_status: "closed",
       notes: "",
     },
     {
@@ -115,7 +115,7 @@ const marketStatus = {
       primary_exchanges: "Mexico",
       local_open: "08:30",
       local_close: "15:00",
-      current_status: "open",
+      current_status: "closed",
       notes: "",
     },
     {
@@ -133,7 +133,7 @@ const marketStatus = {
       primary_exchanges: "Global",
       local_open: "00:00",
       local_close: "23:59",
-      current_status: "open",
+      current_status: "closed",
       notes:
         "The forex market is open 24 hours a day, EXCEPT between 16:00 EST on Friday and 17:00 EST on Sunday",
     },
@@ -149,4 +149,4 @@ const marketStatus = {
   ],
 };
 
-export default marketStatus;
+export default market_status;
