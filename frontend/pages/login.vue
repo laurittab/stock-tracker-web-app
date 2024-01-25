@@ -116,8 +116,9 @@
 const { loggedIn, loggedInStatus, login } = useAuthStore();
 const email = ref("");
 const password = ref("");
-const loginToken = useCookie("access-token", { expires: setExpiration(30) });
+
 const onSubmit = async (event) => {
+  const loginToken = useCookie("access-token", { expires: setExpiration(30) });
   console.log("login-onsubmit-event", event);
   const reqBody = {
     email: email.value,
