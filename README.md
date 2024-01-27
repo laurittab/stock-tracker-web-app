@@ -57,7 +57,7 @@ Go to the `/frontend` folder to start app.
 yarn dev
 ```
 
-## Page views
+---
 
 ![Signup page](/frontend/content/signup.png)
 
