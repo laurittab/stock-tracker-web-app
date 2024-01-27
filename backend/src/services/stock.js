@@ -65,7 +65,9 @@ export const getFundamentals = async (symbol) => {
       console.log("getFundamentals - fundamentals already exist");
       return true;
     }
-    const { data } = companyOverviewService(symbol);
+    const { data } = await companyOverviewService(symbol);
+    console.log("services-getFundamentals-data", data);
+
     if (!Object.keys(data).length) {
       return false;
     }
@@ -76,7 +78,6 @@ export const getFundamentals = async (symbol) => {
     const saved = await newOverview.save();
     console.log("services-stock-getFundamentals-saved", saved);
     return true;
-    // }
   } catch (error) {
     console.log(error);
   }
