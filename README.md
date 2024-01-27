@@ -61,18 +61,18 @@ yarn dev
 
 ![Signup page](/frontend/content/signup.png)
 
-##
+---
 
 ![Stocks table](/frontend/content/stock-table.png)
 
-##
+---
 
 ![Stock news page](/frontend/content/global-news.png)
 
-##
+---
 
 ![Global market status](/frontend/content/global-market-status.png)
 
-##
+---
 
 ![Detailed view of market status](/frontend/content/detailed-view.png)
