@@ -59,11 +59,11 @@ yarn dev
 
 ## Page views
 
-![Stocks table](/frontend/content/stock-table.png)
+![Signup page](/frontend/content/signup.png)
 
 ##
 
-![Signup page](/frontend/content/signup.png)
+![Stocks table](/frontend/content/stock-table.png)
 
 ##
 
@@ -73,6 +73,6 @@ yarn dev
 
 ![Global market status](/frontend/content/global-market-status.png)
 
-###
+##
 
 ![Detailed view of market status](/frontend/content/detailed-view.png)
