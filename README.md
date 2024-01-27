@@ -1,20 +1,78 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Stock Tracker
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+'Stock Tracker' web application showcases the power and speed of Nuxt and Node Express. This is redesigned based on a previous Vue.js version, which was slow to retrieve data from API's. Here, I compile stock ideas and information in one place to help me with making informed decisions.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Features
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+- MEVN stack
+- server-side rendering
+- Tailwind CSS
+- JavaScript and TypeScript
+- SEO optimising
+- selectable, searchable, sortable, pagination table
+- global state management
+- hidden backend
+- cookies and local browser storage
+- links to social media
+- password protection & security
+- API consumption
+- animation
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## Getting started
+
+#### API keys
+
+API keys used in the application can be obtained from these sites. The free account means have restrictions on the number of calls made each day, so this accommodated for in the app.
+
+- [Alpha Vantage's Stock API](https://www.alphavantage.co/)
+- [CurrencyAPI's Currency Conversion API](https://currencyapi.com/)
+
+#### Set up
+
+##### Step 1:
+
+Nuxt is best used with the [Yarn package manager](https://classic.yarnpkg.com/en/docs/install#windows-stable).
+
+```sh
+npm install --global yarn
+```
+
+##### Step 2:
+
+Choose environment variables for both the frontend and backend `.env` files.
+
+##### Step 3:
+
+Go to the `/backend` folder to start the server.
+
+```sh
+yarn start
+```
+
+##### Step 4:
+
+Go to the `/frontend` folder to start app.
+
+```sh
+yarn dev
+```
+
+## Page views
+
+![Stocks table](/frontend/content/stock-table.png)
+
+##
+
+![Signup page](/frontend/content/signup.png)
+
+##
+
+![Stock news page](/frontend/content/global-news.png)
+
+##
+
+![Global market status](/frontend/content/global-market-status.png)
+
+###
+
+![Detailed view of market status](/frontend/content/detailed-view.png)
