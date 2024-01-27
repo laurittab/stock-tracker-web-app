@@ -3,14 +3,16 @@ import Overview from "../models/overview.js";
 import { companyOverviewService } from "./external-api/alphavantage.js";
 
 export const removeStock = async (id) => {
-  return await Stock.findByIdAndDelete(id);
+  return Stock.findByIdAndDelete(id);
 };
 export const createStock = async (stock) => {
   const newStock = Stock(stock);
-  return await newStock.save();
+  return newStock.save();
 };
 export const editStock = async (id, stock) => {
-  return await Stock.findByIdAndUpdate(id, stock).exec();
+  return Stock.findByIdAndUpdate(id, stock, {
+    returnDocument: "after",
+  }).exec();
 };
 
 export const compileStocksData = async () => {

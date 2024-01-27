@@ -1,3 +1,13 @@
+export const createToast = (message, color) => {
+  const toast = useToast();
+  toast.add({
+    title: "<b>Server response</b>",
+    description: `<u>message</u>: ${message}`,
+    timeout: 3500,
+    color: color,
+  });
+};
+
 export const columns = [
   {
     key: "id",

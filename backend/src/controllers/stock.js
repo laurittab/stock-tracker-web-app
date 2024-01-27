@@ -1,7 +1,7 @@
 import * as StockService from "../services/stock.js";
 export const getStocks = async (req, res, next) => {
   try {
-    const stocks = await StockService.compileStocksData(); //Overview.find({}).exec(); //compileStocksData();
+    const stocks = await StockService.compileStocksData();
     res.status(200).send({
       stocks: stocks,
       message: `${stocks.length} stocks retrieved`,
