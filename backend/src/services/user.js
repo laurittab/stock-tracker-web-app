@@ -21,7 +21,7 @@ export const createNewUser = async (email, password) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const userId = uuidv4();
   const token = nanoid(256);
-  let newUser = User({
+  const newUser = User({
     userId: userId,
     email: email,
     password: hashedPassword,

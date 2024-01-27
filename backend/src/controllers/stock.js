@@ -15,7 +15,7 @@ export const addStock = async (req, res, next) => {
   const { symbol, comments, target_price, bottom_price } = req.body;
   let stocks;
   try {
-    let fundamentals = await StockService.getFundamentals(symbol);
+    const fundamentals = await StockService.getFundamentals(symbol);
     console.log("controllers-addStock-fundamentals", fundamentals);
     if (!fundamentals) {
       stocks = await StockService.compileStocksData();

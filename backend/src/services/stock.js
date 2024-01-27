@@ -6,7 +6,7 @@ export const removeStock = async (id) => {
   return await Stock.findByIdAndDelete(id);
 };
 export const createStock = async (stock) => {
-  let newStock = Stock(stock);
+  const newStock = Stock(stock);
   return await newStock.save();
 };
 export const editStock = async (id, stock) => {
@@ -71,7 +71,7 @@ export const getFundamentals = async (symbol) => {
     if (!Object.keys(data).length) {
       return false;
     }
-    let newOverview = Overview({
+    const newOverview = Overview({
       symbol: symbol,
       fundamentals: data,
     });

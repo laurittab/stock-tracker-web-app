@@ -16,11 +16,7 @@
     "mongoose": "^8.0.3",
     "morgan": "^1.10.0",
     "nanoid": "^5.0.4",
-    "node-fetch": "^3.3.2",
-    "scramjet": "^4.37.0",
-    "uuid": "^9.0.1",
-    "winston": "^3.11.0",
-    "winston-daily-rotate-file": "^4.7.1"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"

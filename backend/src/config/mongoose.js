@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Database from "./database.js";
+
 dotenv.config();
 
 const mongodb = mongoose
