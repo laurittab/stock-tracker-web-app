@@ -43,17 +43,6 @@ const updateStatus = async (cookie) => {
   return markets;
 };
 const markets = await updateStatus(checkStatus);
-
-/*
-const {
-  data: {
-    value: { markets },
-  },
-} = await useFetch("/api/market/global");
-console.log("markets-index-markets", markets);*/
-definePageMeta({
-  //layout: "stocks",
-});
 useHead({
   title: "Global Market | status",
   meta: [{ name: "description", content: "a closer look" }],

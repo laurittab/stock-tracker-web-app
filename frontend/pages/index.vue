@@ -165,9 +165,6 @@ function select(row) {
   }
 }
 setStocks(stocks);
-definePageMeta({
-  //layout: "",
-});
 </script>
 
 <style scoped></style>

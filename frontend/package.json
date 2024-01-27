@@ -1,6 +1,7 @@
 {
-  "name": "nuxt-app",
+  "name": "stock-tracker-frontend-for-nuxt-app",
   "private": true,
+  "author": "laurittab",
   "type": "module",
   "scripts": {
     "build": "nuxt build",

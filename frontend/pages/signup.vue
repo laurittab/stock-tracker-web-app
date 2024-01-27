@@ -1,29 +1,5 @@
-<!-- eslint-disable vue/multiline-html-element-content-newline -->
-<!-- eslint-disable vue/singleline-html-element-content-newline -->
 <template>
   <div>
-    <!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-white">
-  <body class="h-full">
-  ```
--->
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
@@ -105,11 +81,8 @@
 </template>
 
 <script setup>
-definePageMeta({
-  layout: "",
-});
 import { useAuthStore } from "@/stores/authentication";
-const { loggedIn, login, loggedInStatus } = useAuthStore();
+const { login } = useAuthStore();
 const email = ref("");
 const password = ref("");
 const loginToken = useCookie("access-token", { expires: setExpiration(1) });
@@ -132,6 +105,6 @@ const onSubmit = async () => {
   password.value = "";
 };
 definePageMeta({
-  layout: "preLogin",
+  layout: "prelogin",
 });
 </script>

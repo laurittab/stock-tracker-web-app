@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-const { marketStatus, setStatus, status } = useMarketsStore();
+const { marketStatus, status } = useMarketsStore();
 </script>
 
 <style scoped>

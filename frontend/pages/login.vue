@@ -1,29 +1,5 @@
-<!-- eslint-disable vue/multiline-html-element-content-newline -->
-<!-- eslint-disable vue/singleline-html-element-content-newline -->
 <template>
   <div>
-    <!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
-    <!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-white">
-  <body class="h-full">
-  ```
--->
     <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
@@ -113,7 +89,7 @@
 </template>
 
 <script setup>
-const { loggedIn, loggedInStatus, login } = useAuthStore();
+const { login } = useAuthStore();
 const email = ref("");
 const password = ref("");
 
@@ -133,11 +109,9 @@ const onSubmit = async (event) => {
     await navigateTo("/");
   }
   createToast(message, color);
-  //email.value = "";
-  //password.value = "";
 };
 
 definePageMeta({
-  layout: "preLogin",
+  layout: "prelogin",
 });
 </script>
